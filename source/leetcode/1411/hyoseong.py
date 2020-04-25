@@ -17,31 +17,25 @@ class Solution:
         for i in range(3):
             for j in range(3):
                 for k in range(3):
-                    if i == j : continue
-                    if j == k : continue
-                    a = i + j * 3 + k * 9
-                    A.append(a)
+                    if i != j != k :
+                        A.append(i + j * 3 + k * 9)
 
         @lc(None)
         def dp(i, prev) :
             if i == n :
                 return 1
-            
-            a = prev % 3
-            b = prev // 3 % 3
-            c = prev // 3 // 3
 
             ret = 0
             for cur in A :
                 if prev != -1 :
-                    if a == cur % 3 :
+                    if prev % 3 == cur % 3 :
                         continue
-                    if b == cur // 3 % 3 :
+                    if prev // 3 % 3 == cur // 3 % 3 :
                         continue
-                    if c == cur // 3 // 3:
+                    if prev // 3 // 3 == cur // 3 // 3:
                         continue
 
-                ret += dp(i+1, cur)
+                ret = (ret + dp(i+1, cur)) % MOD
             return ret
         
-        return dp(0, -1) % MOD
+        return dp(0, -1)
