@@ -11,13 +11,11 @@ sys.setrecursionlimit(10 ** 9)
 ####################################################################
 class Solution:
     def stringMatching(self, words: List[str]) -> List[str]:
-        ret = set()
+        ret = list()
         n = len(words)
         for i in range(n):
             for j in range(n):
-                if i == j :
-                    continue
-                if words[i] in words[j] :
-                    ret.add(words[i])
-        ret = list(ret)
+                if i != j and words[i] in words[j] :
+                    ret.append(words[i])
+                    break
         return ret
