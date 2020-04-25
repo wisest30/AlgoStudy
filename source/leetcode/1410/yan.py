@@ -1,35 +1,23 @@
 class Solution:
     def entityParser(self, text: str) -> str:
-        specials = {
-            # 4
-            '&gt;': '>',
-            '&lt;': '<',
-            # 5
-            '&amp;': '&',
-            # 6
-            '&quot;': '"',
-            '&apos;': "'",
-            # 7
-            '&frasl;': '/',
-        }
-        def find(i):
-            for j in range(4, 8):
-                s = text[i: i + j]
-                if s in specials:
-                    return specials[s], j
-            return None, 0  
+        def parse(text):
+            specials = {
+                '&gt;': '>',
+                '&lt;': '<',
+                '&amp;': '&',
+                '&quot;': '"',
+                '&apos;': "'",
+                '&frasl;': '/',
+            }
+            i = 0
+            while i < len(text):
+                c = text[i]
+                if c == '&':
+                    s = next((s for s in specials if text[i:].startswith(s)), c)
+                    yield specials.get(s, c)
+                    i += len(s)
+                else:            
+                    yield c
+                    i += 1   
         
-        result = ''
-        i = 0
-        while i < len(text):
-            c = text[i]
-            if c == '&':
-                s, j = find(i)
-                if s:
-                    i += j
-                    result += s 
-            else:        
-                result += c
-                i += 1
-        
-        return result
+        return ''.join(parse(text))
