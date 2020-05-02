@@ -1,23 +1,12 @@
-from collections import deque as dq
-from collections import defaultdict as dd
-from collections import Counter as ct
-from functools import lru_cache as lc
-from heapq import heappush as hpush, heappop as hpop, heapify as hfy
-from bisect import bisect_left, bisect_right
-import itertools as it
-import math
-import sys
-sys.setrecursionlimit(10 ** 9)
-####################################################################
 class Solution:
     def minNumberOfFrogs(self, croakOfFrogs: str) -> int:
-        s = "croak"
-        A = [0] * len(s)
+        str_croak = "croak"
+        A = [0] * len(str_croak)
         ret = 0
         for c in croakOfFrogs :
-            i = s.index(c)
-            A[i] += 1
-            if i and A[i-1] < A[i] :
+            idx = str_croak.index(c)
+            A[idx] += 1
+            if idx > 0 and A[idx-1] < A[idx] :
                 return -1
             
             ret = max(ret, A[0] - A[-1])
