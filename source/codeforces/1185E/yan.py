@@ -2,31 +2,24 @@ from collections import defaultdict
 
 
 def snakePositions(matrix):
-    def find(traces, override=True):
-        traces = [(x + 1, y + 1) for x, y in traces]
-        def unique(points):
-            return len(set(points)) == 1
-
-        def increasing(points, override):
-            if not override:
-                return all(x + 1 == y for x, y in zip(points, points[1:]))
-
-            return all(x < y for x, y in zip(points, points[1:]))
-
+    def find(traces):
         if len(traces) == 1:
             return traces[0], traces[0]
 
         traces.sort()
-
-        xs = [x for x, y in traces]
-        ys = [y for x, y in traces]
-
+        xs, ys = zip(*traces)
         first, second = traces[0], traces[1]
+        x, y = xs[0], ys[0]
+        c = matrix[x][y]
         if first[0] == second[0]:
-            if unique(xs) and increasing(ys, override):
+            if any(x != y for x, y in zip(xs, xs[1:])):
+                return None, None
+            if all(c <= matrix[x][y] for y in range(ys[0], ys[-1] + 1)):
                 return traces[0], traces[-1]
         elif first[1] == second[1]:
-            if unique(ys) and increasing(xs, override):
+            if any(x != y for x, y in zip(ys, ys[1:])):
+                return None, None
+            if all(c <= matrix[x][y] for x in range(xs[0], xs[-1] + 1)):
                 return traces[0], traces[-1]
 
         return None, None
@@ -41,14 +34,9 @@ def snakePositions(matrix):
     if not points:
         return [] 
 
+    result = []
     maxChar = max(points)[0]
-
-    start, end = find(points[maxChar], override=False)
-    if not start:
-        return None
-
-    result = [(start, end)]
-    for c in reversed(range(ord('a'), ord(maxChar))):
+    for c in reversed(range(ord('a'), ord(maxChar) + 1)):
         char = chr(c)
         traces = points[char]
         if not traces:
@@ -74,7 +62,7 @@ def solve():
         print('YES')
         print(len(positions))
         for (x0, y0), (x1, y1) in positions:
-            print(x0, y0, x1, y1)
+            print(x0 + 1, y0 + 1, x1 + 1, y1 + 1)
 
 
 for _ in range(int(input())):
