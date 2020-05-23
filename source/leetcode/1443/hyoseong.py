@@ -26,11 +26,8 @@ class Solution:
                     continue
 
                 sub_ret = dfs(nxt, cur)
-                if sub_ret == 0 :
-                    if not hasApple[nxt] :
-                        continue
-                    else :
-                        ret += 2
+                if sub_ret == 0 and not hasApple[nxt] :
+                    continue
                 else :
                     ret += sub_ret + 2
             
