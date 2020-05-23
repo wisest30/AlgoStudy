@@ -20,34 +20,29 @@ class Solution:
             for j in range(C) :
                 S[i+1][j+1] = S[i][j+1] + S[i+1][j] - S[i][j] + A[i][j]
         
+        def get_cnt(y0, x0, y1, x1) :
+            return S[y1][x1] - S[y0][x1] - S[y1][x0] + S[y0][x0]
+
         @lc(None)
         def dp_solve(row, col, remain_cut) :
-            if remain_cut < 0 :
-                return 0
             if remain_cut == 0 :
-                cnt = S[R][C] - S[row][C] - S[R][col] + S[row][col]
-                if cnt >= 1 :
-                    return 1
-                else :
-                    return 0
+                return 1
             
             ret = 0
             for i in range(row + 1, R):
-                apple_cnt = S[i][C] - S[row][C] - S[i][col] + S[row][col]
-                remain_cnt = S[R][C] - S[i][C] - S[R][col] + S[i][col]
+                give_cnt = get_cnt(row, col, i, C)
+                remain_cnt = get_cnt(i, col, R, C)
 
-                if apple_cnt < 1 or remain_cnt < 1 :
-                    continue
+                if give_cnt < 1 or remain_cnt < 1 : continue
 
                 ret += dp_solve(i, col, remain_cut - 1)
                 ret %= MOD
                 
             for i in range(col + 1, C):
-                apple_cnt = S[R][i] - S[R][col] - S[row][i] + S[row][col]
-                remain_cnt = S[R][C] - S[R][i] - S[row][C] + S[row][i]
+                give_cnt = get_cnt(row, col, R, i)
+                remain_cnt = get_cnt(row, i, R, C)
 
-                if apple_cnt < 1 or remain_cnt < 1 :
-                    continue
+                if give_cnt < 1 or remain_cnt < 1 : continue
 
                 ret += dp_solve(row, i, remain_cut - 1)
                 ret %= MOD
