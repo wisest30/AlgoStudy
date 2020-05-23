@@ -11,14 +11,14 @@ sys.setrecursionlimit(10 ** 9)
 ####################################################################
 class Solution:
     def buildArray(self, target: List[int], n: int) -> List[str]:
+        A = []
         ret = []
-        res = []
-        i = 1
-        while ret != target :
-            ret.append(i)
-            res.append("Push")
-            if ret[-1] not in target :
-                ret.pop()
-                res.append("Pop")
-            i += 1
-        return res
+        for i in range(1, n + 1) :
+            if A == target : break
+            A.append(i)
+            ret.append("Push")
+            if A[-1] not in target :
+                A.pop()
+                ret.append("Pop")
+                
+        return ret
