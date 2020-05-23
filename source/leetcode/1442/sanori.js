@@ -12,7 +12,7 @@ var countTriplets = function(arr) {
   for (let i = 0; i < n - 1; i++) {
     for (let j = i + 1; j < n; j++) {
       for (let k = j; k < n; k++) {
-        if ((preXor[i] ^ preXor[j]) === (preXor[j] ^ preXor[k+1])) {
+        if (preXor[i] === preXor[k+1]) {
           res++;
         }
       }
