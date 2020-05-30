@@ -14,33 +14,28 @@ class Solution:
         def dist2(p1, p2) :
             return (p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2
 
-        n = len(points)
+        def getCircleIncludeTwoPoint(i, j) :
+            d2 = dist2(points[i], points[j])
+            d = d2 ** 0.5
+            mx = (points[i][0] + points[j][0]) / 2
+            my = (points[i][1] + points[j][1]) / 2
+
+            if 4 * r * r < d2 :
+                return []
+            elif 4 * r * r == d2 :
+                return [[mx, my]]
+            else :
+                dc0 = ((r * r - d2 / 4) ** 0.5) * (points[j][0] - points[i][0]) / d
+                dc1 = ((r * r - d2 / 4) ** 0.5) * (points[i][1] - points[j][1]) / d
+                return [[mx + dc1, my + dc0], [mx - dc1, my - dc0]]
+        
+        def getCntIncludingPoint(c) :
+            return len([1 for i in range(len(points)) if dist2(c, points[i]) <= r ** 2])
+
         Centers = []
-        P = points
-        for i in range(n):
-            for j in range(i+1, n):
-                d2 = dist2(P[i], P[j])
-                d = d2 ** 0.5
-                mx = (P[i][0] + P[j][0]) / 2
-                my = (P[i][1] + P[j][1]) / 2
-                if 4 * r * r < d2 :
-                    continue
-                elif 4 * r * r == d2 :
-                    Centers.append([mx, my])
-                else :
-                    xc = mx + ((r * r - d2 / 4) ** 0.5) * (P[i][1] - P[j][1]) / d
-                    yc = my + ((r * r - d2 / 4) ** 0.5) * (P[j][0] - P[i][0]) / d
-                    Centers.append([xc, yc])
-                    xc = mx - ((r * r - d2 / 4) ** 0.5) * (P[i][1] - P[j][1]) / d
-                    yc = my - ((r * r - d2 / 4) ** 0.5) * (P[j][0] - P[i][0]) / d
-                    Centers.append([xc, yc])
+        for i in range(len(points)):
+            for j in range(i+1, len(points)):
+                Centers += getCircleIncludeTwoPoint(i, j)
 
-        ret = 1
-        for center in Centers :
-            candi = 0
-            for i in range(n):
-                if dist2(center, P[i]) <= r * r :
-                    candi += 1
-            ret = max(ret, candi)
-
+        ret = max([1] + [getCntIncludingPoint(c) for c in Centers])
         return ret
