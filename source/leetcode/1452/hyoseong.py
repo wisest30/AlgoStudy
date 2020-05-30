@@ -11,22 +11,14 @@ sys.setrecursionlimit(10 ** 9)
 ####################################################################
 class Solution:
     def peopleIndexes(self, A: List[List[str]]) -> List[int]:
-        n = len(A)
-        S = [set() for i in range(n)]
-        for i in range(n) :
-            S[i] = set(A[i])
-        
-        res = [False] * n
-        for i in range(n):
-            for j in range(n):
-                if i == j :
-                    continue
-                if (S[i] | S[j]) == S[j] :
-                    res[i] = True
-                    break
-        
-        ret = []
-        for i in range(n) :
-            if not res[i] :
-                ret.append(i)
+        def isSubset(i, j) :
+            return not (set(A[i]) - set(A[j]))
+
+        def isSubsetOfAny(idx) :
+            for i in range(len(A)) :
+                if idx != i and isSubset(idx, i) :
+                    return True
+            return False
+
+        ret = [i for i in range(len(A)) if not isSubsetOfAny(i)]
         return ret
