@@ -11,9 +11,4 @@ sys.setrecursionlimit(10 ** 9)
 ####################################################################
 class Solution:
     def busyStudent(self, startTime: List[int], endTime: List[int], queryTime: int) -> int:
-        n = len(startTime)
-        ret = 0
-        for i in range(n) :
-            if startTime[i] <= queryTime <= endTime[i] :
-                ret += 1
-        return ret
+        return sum([1 for i in range(len(startTime)) if startTime[i] <= queryTime <= endTime[i]])
