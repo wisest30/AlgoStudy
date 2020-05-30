@@ -9,5 +9,5 @@ class Solution:
 
             q = math.sqrt(r ** 2 - (d / 2) ** 2)
             x0, y0 = (x1 + x2) / 2 + q * dy / d, (y1 + y2) / 2 - q * dx / d
-            res = max(res, sum((x0 - x) ** 2 + (y0 - y) ** 2 <= r * r for x, y in A))
+            res = max(res, sum((x0 - x) ** 2 + (y0 - y) ** 2 <= r * r + 0.00001 for x, y in A))
         return res
