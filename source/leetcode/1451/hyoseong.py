@@ -11,14 +11,6 @@ sys.setrecursionlimit(10 ** 9)
 ####################################################################
 class Solution:
     def arrangeWords(self, text: str) -> str:
-        A = list(text.split(' '))
-        A.sort(key = lambda x : len(x))
-
-        for i in range(len(A)) :
-            if i == 0 :
-                A[i] = A[i][0].upper() + A[i][1:]
-            else :
-                A[i] = A[i].lower()
-
-        ret = " ".join(A)
-        return ret
+        A = sorted(text.lower().split(' '), key = lambda x : len(x))
+        A[0] = A[0][0].upper() + A[0][1:]
+        return " ".join(A)
