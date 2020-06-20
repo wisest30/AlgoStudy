@@ -12,25 +12,22 @@ sys.setrecursionlimit(10 ** 9)
 class BrowserHistory:
 
     def __init__(self, homepage: str):
-        self.A = [homepage]
+        self.A = [""] * 5000
+        self.A[0] = homepage
         self.idx = 0
+        self.cnt = 1
 
     def visit(self, url: str) -> None:
-        while len(self.A) > self.idx + 1:
-            self.A.pop()
-        self.A.append(url)
         self.idx += 1
+        self.A[self.idx] = url
+        self.cnt = self.idx + 1
 
     def back(self, steps: int) -> str:
-        self.idx -= steps
-        if self.idx < 0 :
-            self.idx = 0
+        self.idx = max(0, self.idx - steps)
         return self.A[self.idx]
 
     def forward(self, steps: int) -> str:
-        self.idx += steps
-        if self.idx >= len(self.A) :
-            self.idx = len(self.A) - 1
+        self.idx = min(self.cnt - 1, self.idx + steps)
         return self.A[self.idx]
 
 
