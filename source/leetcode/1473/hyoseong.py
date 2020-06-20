@@ -12,32 +12,21 @@ sys.setrecursionlimit(10 ** 9)
 class Solution:
     def minCost(self, A: List[int], cost: List[List[int]], m: int, n: int, target: int) -> int:
         @lc(None)
-        def f(idx, diff_cnt, prev) :
+        def f(idx, neighborhoods, prev) :
             if idx == m :
-                if diff_cnt == target - 1 :
-                    return 0
-                else :
-                    return float('inf')
-            
-            if diff_cnt >= target :
+                return 0 if neighborhoods == target else float('inf')
+            if neighborhoods > target :
                 return float('inf')
             
             if A[idx] != 0 :
-                if A[idx] == prev :
-                    return f(idx + 1, diff_cnt, prev)
-                else :
-                    return f(idx + 1, diff_cnt + 1, A[idx])
+                return f(idx + 1, neighborhoods + (A[idx] != prev), A[idx])
             else :
                 ret = float('inf')
                 for i in range(n):
-                    nxt_diff_cnt = diff_cnt + 1 if i + 1 != prev else diff_cnt
-                    new_prev = i + 1
-                    sub_ret = f(idx + 1, nxt_diff_cnt, new_prev) + cost[idx][i]
-                    ret = min(ret, sub_ret)
+                    candi = f(idx + 1, neighborhoods + (i + 1 != prev), i + 1) + cost[idx][i]
+                    ret = min(ret, candi)
                 return ret
 
-        ret = f(0, -1, -1)
-        if ret == float('inf') :
-            ret = -1
-        return ret                    
+        ret = f(0, 0, -1)
+        return -1 if ret == float('inf') else ret
                 
