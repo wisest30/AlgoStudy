@@ -15,12 +15,6 @@ class Solution:
         n = len(arr)
         m = arr[(n-1) // 2]
 
-        A = []
-        for i in range(n) :
-            A.append([-abs(arr[i] - m), -arr[i]])
-        A.sort()
-        ret = []
-        for i in range(k) :
-            ret.append(-A[i][1])
-        return ret
+        arr.sort(key = lambda x : -abs(x - m) * 10 ** 9 - x)
+        return arr[:k]
         
