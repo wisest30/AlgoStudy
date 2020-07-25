@@ -1,3 +1,4 @@
+# gradient 관련 참고 자료 - https://datascienceschool.net/view-notebook/4642b9f187784444b8f3a8309c583007/
 import numpy as np
 from scipy.optimize import minimize
 class Solution:
