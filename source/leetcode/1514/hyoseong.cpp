@@ -12,12 +12,11 @@ public:
         auto q = priority_queue<pair<double, int>>();
         q.push({1.0, start});
         while(!q.empty()) {
-            auto cur = q.top().second; auto p = q.top().first; q.pop();
-            cout << cur << " " << p << endl;
+            auto cur = q.top().second;
+            auto p = q.top().first; q.pop();
             if(cur == end) return p;
-            if(visited[cur]) {
-                continue;
-            }
+            if(visited[cur]) continue;
+
             visited[cur] = true;
             for(auto& x : E[cur])
             {
