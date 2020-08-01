@@ -1,38 +1,36 @@
 class Solution {
 public:
-    int closestToTarget(vector<int>& arr, int target) {
-        int nearestZeroBitIdx[21];
-        int ans = INT_MAX;
+    int alphabetSubtree[100000+5][26];
+    vector<int> adj[100000+5];
+    
+    void dfs(int parent, int here, string& labels)
+    {
+        for(int i=0;i<26;i++) alphabetSubtree[here][i] = 0;
+        alphabetSubtree[here][labels[here] - 'a']++;
         
-        memset(nearestZeroBitIdx, -1, sizeof(nearestZeroBitIdx));
-        
-        for(int i=0;i<arr.size();i++)
+        for(int next : adj[here])
         {
-            set<int> eventIdx;
+            if(next == parent) continue;
+            dfs(here, next, labels);
             
-            for(int j=0;j<21;j++)
-            {
-                if(nearestZeroBitIdx[j] == -1) continue;
-                eventIdx.insert(-nearestZeroBitIdx[j]);
-            }
-            
-            int curVal = arr[i];
-            int calc = abs(target - curVal);
-            if(calc < ans) ans = calc;
-            
-            for(int targetIdx : eventIdx)
-            {
-                targetIdx = -targetIdx;
-                curVal &= arr[targetIdx];
-                int calc = abs(target - curVal);
-                if(calc < ans) ans = calc;
-            }
-            
-            for(int j=0;j<21;j++)
-            {
-                if((arr[i]&(1<<j)) == 0) nearestZeroBitIdx[j] = i;
-            }
+            for(int i=0;i<26;i++) alphabetSubtree[here][i] += alphabetSubtree[next][i];
         }
+    }
+    
+    vector<int> countSubTrees(int n, vector<vector<int>>& edges, string labels) {
+        memset(alphabetSubtree, 0, sizeof(alphabetSubtree));
+        
+        for(auto& edge : edges)
+        {
+            adj[edge[0]].push_back(edge[1]);
+            adj[edge[1]].push_back(edge[0]);
+        }
+        
+        dfs(-1, 0, labels);
+        
+        vector<int> ans;
+        
+        for(int i=0;i<n;i++) ans.push_back(alphabetSubtree[i][labels[i]-'a']);
         
         return ans;
     }
