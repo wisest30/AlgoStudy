@@ -1,64 +1,48 @@
+typedef long long ll;
+
 class Solution {
 public:
-    const long long mod = 1'000'000'007;
-    long long nums1Cache[100000+5];
-    long long nums2Cache[100000+5];
+    const ll mod = 1'000'000'007LL;
     
-    unordered_map<int, int> newNums1Pos;
-    unordered_map<int, int> newNums2Pos;
-        
-    long long getNums1Cache(vector<int>& newNums1, vector<int>& newNums2, int pos)
+    ll cache[2][100000+5];
+    vector<int> newNums[2];
+    unordered_map<int, int> numPos[2];
+    
+    ll getCache(int r, int c)
     {
-        if(nums1Cache[pos] != -1) return nums1Cache[pos];
+        if(cache[r][c] != -1) return cache[r][c];
         
-        int val = newNums1[pos];
-        long long &ret = nums1Cache[pos];
+        int val = newNums[r][c];
+        ll& ret = cache[r][c];
         ret = 0;
         
-        if(newNums2Pos.find(val) != newNums2Pos.end()) ret = max(ret, val + getNums2Cache(newNums1, newNums2, newNums2Pos[val] - 1));
-        ret = max(ret, val + getNums1Cache(newNums1, newNums2, pos - 1));
-        
-        return ret;
-    }
-    
-    long long getNums2Cache(vector<int>& newNums1, vector<int>& newNums2, int pos)
-    {
-        if(nums2Cache[pos] != -1) return nums2Cache[pos];
-        
-        int val = newNums2[pos];
-        long long &ret = nums2Cache[pos];
-        ret = 0;
-        
-        if(newNums1Pos.find(val) != newNums1Pos.end()) ret = max(ret, val + getNums1Cache(newNums1, newNums2, newNums1Pos[val] - 1));
-        ret = max(ret, val + getNums2Cache(newNums1, newNums2, pos - 1));
+        if(numPos[1-r].find(val) != numPos[1-r].end()) ret = max(ret, val + getCache(1-r, numPos[1-r][val]-1));
+        ret = max(ret, val + getCache(r, c-1));
         
         return ret;
     }
     
     int maxSum(vector<int>& nums1, vector<int>& nums2) {
-        vector<int> newNums1 = {0};
-        vector<int> newNums2 = {0};
+        newNums[0].push_back(0);
+        newNums[1].push_back(0);
         
-        memset(nums1Cache, -1, sizeof(nums1Cache));
-        memset(nums2Cache, -1, sizeof(nums2Cache));
+        memset(cache, -1, sizeof(cache));
+        cache[0][0] = cache[1][0] = 0;
         
-        nums1Cache[0] = 0;
-        nums2Cache[0] = 0;
-        
-        for(int i=0;i<nums1.size();i++)
+        for(int i=0;i<nums1.size();i++) 
         {
-            newNums1Pos[nums1[i]] = i+1;
-            newNums1.push_back(nums1[i]);
+            numPos[0][nums1[i]] = i+1;
+            newNums[0].push_back(nums1[i]);
         }
         
         for(int i=0;i<nums2.size();i++)
         {
-            newNums2Pos[nums2[i]] = i+1;
-            newNums2.push_back(nums2[i]);
+            numPos[1][nums2[i]] = i+1;
+            newNums[1].push_back(nums2[i]);
         }
         
-        long long ans = max(getNums1Cache(newNums1, newNums2, (int)newNums1.size()-1),
-                  getNums2Cache(newNums1, newNums2, (int)newNums2.size()-1));
+        ll ans = max(getCache(0, nums1.size()),
+                    getCache(1, nums2.size()));
         
         return ans%mod;
     }
