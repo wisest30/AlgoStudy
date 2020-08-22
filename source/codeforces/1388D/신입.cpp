@@ -68,7 +68,7 @@ int main()
 	{
 		int target;
 		scanf("%d", &target);
-    if(target != -1) adj[target].push_back(i);
+    		if(target != -1) adj[target].push_back(i);
 	}
 
 	ll ans = 0LL;
