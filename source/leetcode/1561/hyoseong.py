@@ -1,11 +1,7 @@
 class Solution:
     def maxCoins(self, piles: List[int]) -> int:
-        dq = collections.deque(sorted(piles))
+        n = len(piles) // 3
+        piles.sort()
         
-        ret = 0
-        for i in range(len(piles) // 3) :
-            dq.pop()
-            ret += dq.pop()
-            dq.popleft()
-        
+        ret = sum([piles[i] for i in range(3*n - 2, n - 2, -2)])
         return ret
