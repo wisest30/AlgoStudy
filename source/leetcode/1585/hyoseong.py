@@ -5,32 +5,25 @@ class Solution:
         B = list(map(int, t))
         
         n = len(A)
-        left = collections.Counter(A)
-        right = collections.Counter()
+        left = [0] * 10
+        right = [0] * 10
+        for a in A :
+            right[a] += 1
         
-        D = [[] for _ in range(10)]
-        for i in range(n-1, -1, -1) :
-            left[A[i]] -= 1
+        D = [deque() for _ in range(10)]
+        for a in A :
+            right[a] -= 1
             
-            cnt = 0
-            for d in range(A[i]+1) :
-                cnt += left[d]
-            left_idx = cnt
+            min_idx = sum(left[:a+1])
+            max_idx = n - 1 - sum(right[a:])
+            D[a].append([min_idx, max_idx])
             
-            cnt = 0
-            for d in range(A[i], 10) :
-                cnt += right[d]
-            right_idx = n - 1 - cnt
-            
-            D[A[i]].append([left_idx, right_idx])
-            
-            right[A[i]] += 1
+            left[a] += 1
         
-        for i in range(n) :
-            if D[B[i]][-1][0] <= i <= D[B[i]][-1][1] :
-                D[B[i]].pop()
+        for i, d in enumerate(B) :
+            if D[d][0][0] <= i <= D[d][0][1] :
+                D[d].popleft()
             else :
                 return False
 
         return True
-        
