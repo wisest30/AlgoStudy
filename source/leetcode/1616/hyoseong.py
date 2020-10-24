@@ -9,17 +9,9 @@ class Solution:
         n = len(a)
         def f(s, t) :
             x = 0
-            for i in range(n) :
-                if s[i] == t[-i-1] :
-                    x += 1
-                else :
-                    break
-            if isPalindrome(s[:x] + t[x:]) :
-                return True
-            elif isPalindrome(s[:-x] + t[-x:]) :
-                return True
-            else :
-                return False
+            while x < n and s[x] == t[-x-1] :
+                x += 1
+            return isPalindrome(s[:x] + t[x:]) or isPalindrome(s[:-x] + t[-x:])
         
         if f(a, b) or f(b, a) :
             return True
