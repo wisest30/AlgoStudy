@@ -3,25 +3,14 @@ class Solution:
         n = len(heights)
         
         def check(m) :
-            if m >= n :
-                return False
-
-            A = []
-            for i in range(m) :
-                a = heights[i+1] - heights[i]
-                
-                if a > 0 :
-                    A.append(a)
-
+            A = sorted([heights[i+1] - heights[i] for i in range(m) if heights[i+1] > heights[i]])
             A.sort()
-            b, l = bricks, ladders
-            for a in A :
-                if b - a >= 0 :
-                    b -= a
-                elif l - 1 >= 0 :
-                    l -= 1
+            b = bricks
+            for i in range(len(A)) :
+                if b >= A[i] :
+                    b -= A[i]
                 else :
-                    return False
+                    return len(A) - i <= ladders
             return True
             
         l, r = 0, n
