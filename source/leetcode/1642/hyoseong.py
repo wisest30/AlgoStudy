@@ -4,7 +4,6 @@ class Solution:
         
         def check(m) :
             A = sorted([heights[i+1] - heights[i] for i in range(m) if heights[i+1] > heights[i]])
-            A.sort()
             b = bricks
             for i in range(len(A)) :
                 if b >= A[i] :
