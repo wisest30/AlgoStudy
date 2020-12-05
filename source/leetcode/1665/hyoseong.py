@@ -3,8 +3,7 @@ class Solution:
         tasks.sort(key = lambda x : x[0]-x[1])
         
         t0, t1 = zip(*tasks)
-        ret = max(sum(t0), max(t1))
-        s = 0
+        ret = s = 0
         
         for t in tasks :
             ret = max(ret, s + t[1])
