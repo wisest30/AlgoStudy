@@ -3,48 +3,34 @@
 using namespace std;
 using ll = long long;
 
-constexpr int n = 4;
-ll X[n], Y[n], XX[n], YY[n];
-
-ll solve3(ll x, ll y) {
-    ll A[4];
-    A[0] = XX[1] - x;
-    A[1] = XX[3] - x;
-    A[2] = YY[2] - y;
-    A[3] = YY[3] - y;
-
-    sort(A, A + 4);
-    ll len = A[2];//max(1ll, A[2]);
-
-    ll ret = 0;
-    ret += abs(XX[0] - x) + abs(YY[0] - y);
-    ret += abs(XX[1] - x - len) + abs(YY[1] - y);
-    ret += abs(XX[2] - x) + abs(YY[2] - y - len);
-    ret += abs(XX[3] - x - len) + abs(YY[3] - y - len);
-    return ret;
-}
-
-ll solve2(ll x, ll y) {
-    ll ret = numeric_limits<ll>::max();
-    int p[4] = {0, 1, 2, 3};
-    do {
-        for(auto i = 0; i < 4; ++i)
-            XX[i] = X[p[i]], YY[i] = Y[p[i]];
-        
-        ret = min(ret, solve3(x, y));
-    } while(next_permutation(p, p + 4));
-    return ret;
-}
-
+constexpr int MAX_N = 4;
+ll X[MAX_N], Y[MAX_N];
 void solve(int TestCase) {
-    for(auto i = 0; i < n; ++i)
+    for(auto i = 0; i < 4; ++i)
         cin >> X[i] >> Y[i];
     
-    ll ret = numeric_limits<ll>::max();
-    for(auto i = 0; i < 4; ++i)
-        for(auto j = 0; j < 4; ++j)
-            ret = min(ret, solve2(X[i], Y[j]));
-    
+    int p[4] = {0, 1, 2, 3};
+
+    ll ret = INT64_MAX;
+    do {
+        for(auto i = 0; i < 4; ++i) {
+            for(auto j = 0; j < 4; ++j) {
+                auto x = X[i], y = Y[j];
+
+                auto v = vector<ll>{X[p[1]] - x, X[p[2]] - x, Y[p[2]] - y, Y[p[3]] - y};
+                sort(v.begin(), v.end());
+                ll len = v[2];
+
+                ll candi = 0;
+                candi += abs(x - X[p[0]]) + abs(y - Y[p[0]]);
+                candi += abs(x + len - X[p[1]]) + abs(y - Y[p[1]]);
+                candi += abs(x + len - X[p[2]]) + abs(y + len - Y[p[2]]);
+                candi += abs(x - X[p[3]]) + abs(y + len - Y[p[3]]);
+                ret = min(ret, candi);
+            }
+        }
+    } while(next_permutation(p, p + 4));
+
     cout << ret << endl;
 }
  
