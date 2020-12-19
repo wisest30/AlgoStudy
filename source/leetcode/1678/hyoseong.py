@@ -3,13 +3,10 @@ class Solution:
         i = 0
         ret = ""
         while i < len(command) :
-            if command[i] == 'G' :
-                ret += "G"
-                i += 1
-            elif command[i] == '(' and command[i+1] == ')' :
-                ret += 'o'
-                i += 2
-            else :
-                ret += 'al'
-                i += 4
+            for s in [["G", "G"], ["()", "o"], ["(al)", "al"]] :
+                if command[i:i+len(s[0])] == s[0] :
+                    ret += s[1]
+                    i += len(s[0])
+                    break
+
         return ret
