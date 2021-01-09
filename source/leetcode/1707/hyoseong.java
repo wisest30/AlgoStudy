@@ -1,12 +1,17 @@
 class Solution {
     class Trie {
         Trie[] child;
+        int value;
+        
         public Trie() {
             child = new Trie[2];
         }
+        
         public void push(int x, int depth) {
-            if(depth == 32)
+            if(depth == 32) {
+                value = x;
                 return;
+            }
 
             Boolean right = (x & (1 << (31 - depth))) != 0;
             int idx = right ? 1 : 0;
@@ -14,21 +19,17 @@ class Solution {
                 child[idx] = new Trie();
             child[idx].push(x, depth + 1);                
         }
+        
         public int find(int x, int depth) {
             if(depth == 32)
-                return 0;
+                return value ^ x;
             
             Boolean right = (x & (1 << (31 - depth))) == 0;
             int idx = right ? 1 : 0;
             if(child[idx] == null)
                 idx ^= 1;
             
-            int ret = child[idx].find(x, depth + 1);
-            int p = x & (1 << (31 - depth));
-            if(p > 0 && idx == 0 || p == 0 && idx == 1)
-                ret |= 1 << (31 - depth);
-            
-            return ret;
+            return child[idx].find(x, depth + 1);            
         }
     }
     
