@@ -26,10 +26,11 @@ class Solution:
             return False
 
 
-solution = Solution()
+if __name__ == "__main__":
+    solution = Solution()
 
-assert(solution.areAlmostEqual("bank", "kanb") == True)
-assert(solution.areAlmostEqual("attack", "defend") == False)
-assert(solution.areAlmostEqual("kelb", "kelb") == True)
-assert(solution.areAlmostEqual("abcd", "dcba") == False)
-assert(solution.areAlmostEqual("aa", "ac") == False)
+    assert(solution.areAlmostEqual("bank", "kanb") == True)
+    assert(solution.areAlmostEqual("attack", "defend") == False)
+    assert(solution.areAlmostEqual("kelb", "kelb") == True)
+    assert(solution.areAlmostEqual("abcd", "dcba") == False)
+    assert(solution.areAlmostEqual("aa", "ac") == False)
