@@ -1,5 +1,5 @@
 namespace {
-class FenwickTree {
+    class FenwickTree {
     public:
         int N;
         vector<long long> f;
@@ -30,7 +30,7 @@ class FenwickTree {
 class MKAverage {
 public:
     long long m, k;
-    vector<long long> A;
+    queue<long long> A;
     FenwickTree ft = FenwickTree{100001};
     FenwickTree ft2 = FenwickTree{100001};
     MKAverage(int m, int k) {
@@ -38,73 +38,40 @@ public:
     }
     
     void addElement(int num) {
-        A.push_back(num);
+        A.push(num);
         ft.upd(num, 1);
         ft2.upd(num, num);
         
         if(A.size() > m) {
-            long long x = A[(int)A.size() - m - 1];
+            long long x = A.front();
             ft.upd(x, -1);
             ft2.upd(x, -x);
+            A.pop();
         }
+    }
+    
+    long long get_sum_nth(int n) {
+        auto check = [&](long long mid) {
+            auto cnt = ft.get(0, mid + 1);
+            return cnt >= n;
+        };
+        
+        long long l = 0, r = 100001;
+        while(l + 1 < r) {
+            auto mid = (l + r) / 2;
+            if(check(mid))
+                r = mid;
+            else
+                l = mid;
+        }
+        
+        return ft2.get(r) + r * (n - ft.get(r));
     }
     
     int calculateMKAverage() {
         if(A.size() < m) return -1;
         
-        auto check = [&](long long mm, int tp) {
-            if(tp == 0) {
-                auto x = ft.get(0, mm + 1);
-                return x >= k;
-            }
-            else {
-                auto x = ft.get(mm, 100001);
-                return x >= k;
-            }
-        };
-
-        long long ll = 0, rr = 0;
-
-        long long l = 0, r = 100001;
-        while(l + 1 < r) {
-            auto mm = (l + r) / 2;
-            if(check(mm, 0))
-                r = mm;
-            else
-                l = mm;
-        }
-        ll = r;
-        
-        l = 0, r = 100001;
-        while(l + 1 < r) {
-            auto mm = (l + r) / 2;
-            if(check(mm, 1))
-                l = mm;
-            else
-                r = mm;
-        }
-        rr = l;
-
-        if(ll == rr) {
-            return ll;
-        }
-
-        long long x = 0;
-        if(ll + 1 < rr)
-            x = ft2.get(ll + 1, rr);
-
-        long long d = ft.get(0, ll + 1) - k;
-        x += ll * d;
-        
-        d = ft.get(rr, 100001) - k;
-        x += rr * d;
+        auto x = get_sum_nth(m - k) - get_sum_nth(k);
         return x / (m - k - k);
     }
 };
-
-/**
- * Your MKAverage object will be instantiated and called as such:
- * MKAverage* obj = new MKAverage(m, k);
- * obj->addElement(num);
- * int param_2 = obj->calculateMKAverage();
- */
