@@ -17,28 +17,28 @@ bool is_prime(long long n) {
 }
 
 void solve(int TestCase) {
-    long long z;
+    ll z;
     cin >> z;
 
-    ll s = sqrt(z) + 10;
-    while(s * s > z) s--;
-
-    vector<ll> A;
-    for(auto i = s+1;; ++i) {
+    ll x = sqrt(z) + 1;
+    ll p = -1;
+    for(auto i = x + 1;; ++i) {
         if(is_prime(i)) {
-            A.push_back(i);
+            p = i;
             break;
         }
     }
 
-    for(auto i = s; i >= 0; --i) {
-        if(is_prime(i)) A.push_back(i);
-        if(A.size() == 3) break;
-    }
+    for(auto i = x; i >= 2; --i) {
+        if(is_prime(i)) {
+            if(i * p <= z) {
+                cout << (i * p) << endl;
+                return;
+            }
 
-    ll ret = A[0] * A[1];
-    if(ret > z) ret = A[1] * A[2];
-    cout << ret << endl;
+            p = i;
+        }
+    }
 }
  
 int main(){
