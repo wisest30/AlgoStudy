@@ -1,11 +1,17 @@
 /**
- * @param {string} sentence
- * @return {boolean}
+ * @param {number[]} costs
+ * @param {number} coins
+ * @return {number}
  */
- var checkIfPangram = function(sentence) {
-  const alpha = new Set();
-  for (const ch of sentence) {
-    alpha.add(ch);
+ var maxIceCream = function(costs, coins) {
+  costs.sort((a, b) => a - b);
+  let res = 0, sum = 0;
+  for (let i = 0; i < costs.length; i++) {
+    if (sum + costs[i] > coins) {
+      break;
+    }
+    sum += costs[i];
+    res++;
   }
-  return alpha.size === 26;
+  return res;
 };
