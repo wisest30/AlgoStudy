@@ -3,6 +3,11 @@
  * @return {number[]}
  */
 var getOrder = function(tasks) {
+    // make tasks with index
+    for (let i = 0; i < tasks.length; i++) {
+        tasks[i].push(i);
+    }
+    
     // sort by enqueueTime (asc)
     tasks.sort(function(a, b) { return a[0] - b[0]; });
     
@@ -18,21 +23,27 @@ var getOrder = function(tasks) {
             pq.enqueue({
                 enqueueTime: task[0],
                 processingTime: task[1],
-                index: i
+                index: task[2]
             });
         }
+        
         return i;
     }
     
     let curTime = tasks[0][0]; // initalize startTime
     let proceedOrder = [];
     let taskIdx = 0;
-    while (!pq.isEmpty() || taskIdx < tasks.length) {
+    while (true) {
         taskIdx = enqueueAvailableTasks(curTime, taskIdx);
         if (!pq.isEmpty()) {
             let task = pq.dequeue().element;
             proceedOrder.push(task.index);
             curTime += task.processingTime;
+        } else {
+            if (taskIdx >= tasks.length) {
+                break;  // all task proceed.
+            }
+            curTime = tasks[taskIdx][0];    // idleling
         }
     }
     
