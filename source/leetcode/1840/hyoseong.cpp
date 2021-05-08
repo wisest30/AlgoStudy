@@ -7,7 +7,7 @@ public:
         
         vector<int> H(R.size());
         for(auto i = 0; i < H.size(); ++i) {
-            if(i == 0) H[i] = R[i][0] - 1;
+            if(i == 0) H[i] = min(R[i][1], R[i][0] - 1);
             else H[i] = min(R[i][1], H[i-1] + R[i][0] - R[i-1][0]);
         }
         for(auto i = (int)H.size() - 2; i >= 0; --i)
