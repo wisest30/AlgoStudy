@@ -15,16 +15,14 @@ public:
         int i = 0;
         unsigned long long cur = 0;
         for(i = 0; i < s.size(); ++i) {
-            auto nxt = cur * 10 + s[i] - '0';
-            if(nxt > start)
-                break;
-            cur = nxt;
+            cur = cur * 10 + s[i] - '0';
+            if(cur == start) break;
+            else if(cur > start) return false;
         }
         
-        if(cur != start)
-            return false;
+        if(cur < start) return false;
         
-        return f(s.substr(i), start - 1);
+        return f(s.substr(i+1), start - 1);
     }
     
     bool splitString(string s) {
