@@ -13,14 +13,10 @@ public:
         for(auto& i : intervals) {
             auto p = s.lower_bound(i[0]);
             auto q = s.upper_bound(i[1]);
-            vector<int> A;
-            for(auto i = p; i != q; ++i)
-                A.push_back(*i);
-            
-            for(auto a : A) {
-                m[a] = i[1] - i[0] + 1;
-                s.erase(a);
-            }
+            for(auto it = p; it != q; ++it)
+                m[*it] = i[1] - i[0] + 1;
+
+            s.erase(p, q);
         }
         
         vector<int> ret;
