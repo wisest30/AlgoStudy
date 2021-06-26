@@ -10,7 +10,6 @@ var maximumRemovals = function(s, p, removable) {
         let r = arr.length;
         while (l < r) {
             let m = Math.floor((l + r) / 2);
-            //console.log('binarySearch, l=' + l + ', m=' + m + ', r=' + r);
             if (pred(m)) {
                 l = m + 1;
             } else {
@@ -21,7 +20,6 @@ var maximumRemovals = function(s, p, removable) {
     }
     
     var isSubsequence = function(s1, s2) {
-        // check s1 is subsequence of s2
         let j = 0;
         for (let i = 0; i < s2.length && j < s1.length; i++) {
             if (s1[j] === s2[i]) {
@@ -38,7 +36,6 @@ var maximumRemovals = function(s, p, removable) {
             strArr[removeIdx] = '';
         }
         let str = strArr.join('');
-        //console.log('strArr=' + strArr + ', str=' + str + ', isSubsequence(p, str)=' + isSubsequence(p, str));
         return isSubsequence(p, str);
     });
     
