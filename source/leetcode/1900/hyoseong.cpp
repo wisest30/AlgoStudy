@@ -1,29 +1,43 @@
 class Solution {
 public:
-    set<int> getNext(int subset) {
-        auto cnt = __builtin_popcount(subset);
-        auto sz = cnt / 2;
+    vector<int> earliestAndLatest(int n, int firstPlayer, int secondPlayer) {
+        firstPlayer--, secondPlayer--;
         
-        vector<int> A, B;
-        for(auto i = 0; i < 30 && A.size() < sz; ++i)
-            if(subset & (1 << i))
-                A.push_back(i);
-        for(auto i = 30; i >= 0 && B.size() < sz; --i)
-            if(subset & (1 << i))
-                B.push_back(i);
+        vector<set<int>> allCase(10);
+        allCase[0].insert((1 << n) - 1);
         
-        set<int> ret;
-        for(auto x = 0; x < (1 << sz); ++x) {
-            auto y = subset;
-            for(auto i = 0; i < sz; ++i)
-                y -= (x & (1 << i)) ? (1 << A[i]) : (1 << B[i]);
-            ret.insert(y);
+        auto ret = vector<int>{INT_MAX, 0};
+        for(auto i = 1; i < allCase.size(); ++i) {
+            for(auto subset : allCase[i-1]) {
+                vector<int> A;
+                int f = -1, s = -1;
+                for(auto i = 0; i < n; ++i) {
+                    if(i == firstPlayer) f = A.size();
+                    if(i == secondPlayer) s = A.size();
+
+                    if(subset & (1 << i))
+                        A.push_back(i);                    
+                }
+
+                if(s == (int)A.size() - 1 - f) {
+                    ret[0] = min(ret[0], i);
+                    ret[1] = max(ret[1], i);
+                    continue;
+                }
+
+                for(auto x = 0; x < (1 << (A.size() / 2)); ++x) {
+                    auto nxtSubset = subset;
+                    for(auto i = 0; i < A.size() / 2; ++i)
+                        if(x & (1 << i)) nxtSubset -= 1 << A[(int)A.size() - 1 - i];
+                        else nxtSubset -= 1 << A[i];
+                    if(!(nxtSubset & (1 << firstPlayer))) continue;
+                    if(!(nxtSubset & (1 << secondPlayer))) continue;
+                    
+                    allCase[i].insert(nxtSubset);
+                }
+            }
         }
         
         return ret;
-    }
-    
-    vector<int> earliestAndLatest(int n, int f, int s) {
-        f--, s--;        
     }
 };
