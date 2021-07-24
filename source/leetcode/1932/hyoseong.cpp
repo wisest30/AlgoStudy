@@ -14,14 +14,15 @@ public:
     map<int, TreeNode*> val_to_ptr;
     set<int> visited;
     int merge_count;
+    bool valid;
     
-    array<int, 3> dfs(TreeNode* cur) {
+    array<int, 2> dfs(TreeNode* cur) {
         if(visited.count(cur->val))
-            return {0, 0, 0};
+            return {0, 0};
         visited.insert(cur->val);
 
-        array<int, 3> ret;
-        ret[0] = ret[1] = cur->val, ret[2] = true;
+        array<int, 2> ret;
+        ret[0] = ret[1] = cur->val;
         
         for(auto i = 0; i < 2; ++i) {
             auto& p = i == 0 ? cur->left : cur->right;
@@ -32,12 +33,11 @@ public:
                 auto sub_ret = dfs(p);
                 ret[0] = min(ret[0], sub_ret[0]);
                 ret[1] = max(ret[1], sub_ret[1]);
-                ret[2] &= sub_ret[2];
                 
                 if(i == 0 && cur->val < sub_ret[1])
-                    ret[2] = false;
+                    valid = false;
                 if(i == 1 && cur->val > sub_ret[0])
-                    ret[2] = false;
+                    valid = false;
             }
         }
         
@@ -45,6 +45,7 @@ public:
     }
     
     TreeNode* canMerge(vector<TreeNode*>& trees) {
+        valid = true;
         merge_count = 0;
         set<int> leaf_values;
         for(auto p : trees) {
@@ -63,7 +64,10 @@ public:
         
         if(!root) return nullptr;
         
-        auto ret = dfs(root);
-        return ret[2] && merge_count + 1 == trees.size() ? root : nullptr;
+        dfs(root);
+        if(!valid || merge_count + 1 < trees.size())
+            return nullptr;
+        else
+            return root;
     }
 };
