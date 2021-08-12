@@ -1,5 +1,5 @@
-/*
- * https://leetcode.com/problems/count-number-of-special-subsequences/discuss/1397896/Easy-C%2B%2B-solution-with-less-time
+/* Problem : https://leetcode.com/contest/weekly-contest-252/problems/count-number-of-special-subsequences/
+ * Solution : https://leetcode.com/problems/count-number-of-special-subsequences/discuss/1397896/Easy-C%2B%2B-solution-with-less-time
  * 왜 답이 되는지 모르겠음...;
  */
 using ll = long long;
