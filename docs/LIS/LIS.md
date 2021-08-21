@@ -11,16 +11,16 @@ https://shoark7.github.io/programming/algorithm/3-LIS-algorithms
 아래는 제가(효성이가) lis의 길이를 구할 때 사용하는 c++코드입니다.
 ```c++
 template<typename T>
-int lis(const vector<T>& A) {
-    auto ret = vector<T>{};
+int lis_length(const vector<T>& A) {
+    auto helper = vector<T>{};
 
     for(auto a : A) {
         // if equal is allowed change lower_bound to upper_bound.
-        auto p = lower_bound(ret.begin(), ret.end(), a) - ret.begin();
-        if(p == ret.size()) ret.push_back(a);
-        else ret[p] = a;
+        auto p = lower_bound(helper.begin(), helper.end(), a) - helper.begin();
+        if(p == helper.size()) ret.push_back(a);
+        else helper[p] = a;
     }
 
-    return ret.size();
+    return helper.size();
 }
 ```
