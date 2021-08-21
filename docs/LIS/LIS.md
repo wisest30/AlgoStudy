@@ -17,7 +17,7 @@ int lis_length(const vector<T>& A) {
     for(auto a : A) {
         // if equal is allowed change lower_bound to upper_bound.
         auto p = lower_bound(helper.begin(), helper.end(), a) - helper.begin();
-        if(p == helper.size()) ret.push_back(a);
+        if(p == helper.size()) helper.push_back(a);
         else helper[p] = a;
     }
 
