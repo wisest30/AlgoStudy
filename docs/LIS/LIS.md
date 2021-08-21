@@ -8,10 +8,10 @@ LIS 개념을 이해하려면 dp(dynamic programming), binary search 에 대해 
 
 https://shoark7.github.io/programming/algorithm/3-LIS-algorithms
 
-아래는 제가(효성이가) lis를 구할 때 사용하는 c++코드입니다.
+아래는 제가(효성이가) lis의 길이를 구할 때 사용하는 c++코드입니다.
 ```c++
 template<typename T>
-vector<T> lis(const vector<T>& A) {
+int lis(const vector<T>& A) {
     auto ret = vector<T>{};
 
     for(auto a : A) {
@@ -21,6 +21,6 @@ vector<T> lis(const vector<T>& A) {
         else ret[p] = a;
     }
 
-    return ret;
+    return ret.size();
 }
 ```
