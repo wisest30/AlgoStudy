@@ -9,9 +9,9 @@ void solve() {
 	int n; string s;
 	cin >> n >> s;
 
-	ll lh, rh, ud, acc;
+	ll lh, rh, ud, acc; //acc => i번째 index에서 끝나는 substring들의 swap수의 총 합.
 	lh = rh = ud = acc = 0;
-	ll ans = 0;
+	ll ans = 0; // ans => sum(acc[0] ~ acc[i])
 	for (char c : s) {
 		ans += acc;
 		ans %= MOD;
