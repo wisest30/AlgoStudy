@@ -8,7 +8,7 @@ const ll MOD = 1e9 + 7;
 void solve() {
 	int n; string s;
 	cin >> n >> s;
-	memset(dp, 0, sizeof(dp));
+
 	ll lh, rh, ud, acc;
 	lh = rh = ud = acc = 0;
 	ll ans = 0;
