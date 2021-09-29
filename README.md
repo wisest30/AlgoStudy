@@ -17,4 +17,4 @@ source/codeforces/(문제번호)/(파일이름)
 
   [닉네임].cpp, [닉네임].py, [닉네임]_[추가설명].cpp 등등
 
-  ex) hyoseong.cpp, hyoseong_faster.cpp, hyoseong_time_limit.cpp
+  ex) hyo.cpp, hyo_faster.cpp, hyo_time_limit.cpp
