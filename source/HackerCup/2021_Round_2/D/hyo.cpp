@@ -158,9 +158,6 @@ void f1000(vector<int>& A, vector<int>& B, vector<ll>& L, int k) {
         for(auto x : a) A.push_back(I[x - 1]);
         for(auto x : b) B.push_back(I[x - 1]);
     }
-
-    sort(A.begin(), A.end());
-    sort(B.begin(), B.end());
 }
 
 void f200000(vector<int>& A, vector<int>& B, vector<ll>& L, int k) {
