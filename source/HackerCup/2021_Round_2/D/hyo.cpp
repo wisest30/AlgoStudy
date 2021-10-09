@@ -3,10 +3,6 @@
 using namespace std;
 using ll = long long;
 
-#include<bits/stdc++.h>
- 
-using namespace std;
-
 class FenwickTree {
 public:
     int N;
