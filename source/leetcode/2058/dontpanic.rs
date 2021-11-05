@@ -23,13 +23,13 @@ pub fn nodes_between_critical_points_cpplike(mut head: Option<Box<ListNode>>) ->
         let x = head.unwrap();
         a.push(x.val);
         head = x.next;
-    };
+    }
 
     let n = a.len();
     let mut b = Vec::<i32>::new();
-    for i in 1..(n-1) {
-        let is_maxima= a[i-1] < a[i] && a[i] > a[i+1];
-        let is_minima = a[i-1] > a[i] && a[i] < a[i+1];
+    for i in 1..(n - 1) {
+        let is_maxima = a[i - 1] < a[i] && a[i] > a[i + 1];
+        let is_minima = a[i - 1] > a[i] && a[i] < a[i + 1];
 
         if is_maxima || is_minima {
             b.push(i as i32);
