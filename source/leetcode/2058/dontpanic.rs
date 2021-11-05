@@ -31,14 +31,22 @@ pub fn nodes_between_critical_points_cpplike(mut head: Option<Box<ListNode>>) ->
 pub fn nodes_between_critical_points_cpplike_vec(a: Vec<i32>) -> Vec<i32> {
     let n = a.len();
     let mut b = Vec::<i32>::new();
-    for i in 1..(n - 1) {
-        let is_maxima = a[i - 1] < a[i] && a[i] > a[i + 1];
-        let is_minima = a[i - 1] > a[i] && a[i] < a[i + 1];
 
-        if is_maxima || is_minima {
+    let is_maxima = |x, y, z| x < y && y > z;
+    let is_minima = |x, y, z| x > y && y < z;
+
+    let mut a3e = a.windows(3).enumerate();
+
+    while let Some((i, [x, y, z])) = a3e.next() {
+        if is_maxima(x, y, z) || is_minima(x, y, z) {
             b.push(i as i32);
         }
     }
+
+    // a3e.filter(|(i, [x,y,z])| is_maxima(x,y,z) || is_minima(x,y,z)).map(|(i, _)| i).collect();
+    //// I tried this but it does not work.
+    //// (window enumerate gives Some() which may contain something like &[_] &[_, _] &[_, _, _])
+
 
     if b.len() < 2 {
         vec![-1, -1]
