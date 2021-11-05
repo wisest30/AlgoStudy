@@ -25,6 +25,10 @@ pub fn nodes_between_critical_points_cpplike(mut head: Option<Box<ListNode>>) ->
         head = x.next;
     }
 
+    nodes_between_critical_points_cpplike_vec(a)
+}
+
+pub fn nodes_between_critical_points_cpplike_vec(a: Vec<i32>) -> Vec<i32> {
     let n = a.len();
     let mut b = Vec::<i32>::new();
     for i in 1..(n - 1) {
@@ -39,7 +43,7 @@ pub fn nodes_between_critical_points_cpplike(mut head: Option<Box<ListNode>>) ->
     if b.len() < 2 {
         vec![-1, -1]
     } else {
-        let &dmin = b.iter().min().unwrap();
+        let dmin = b.windows(2).map(|p| p[1] - p[0]).min().unwrap();
         let dmax = b.last().unwrap() - b.first().unwrap();
 
         vec![dmin, dmax]
@@ -155,7 +159,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn nodes_between_critical_points_typical() {
+    fn nodes_between_critical_points_vec_typical() {
         let v = vec![3, 1];
         assert_eq!(vec![-1, -1], nodes_between_critical_points_vec(v));
 
@@ -170,5 +174,23 @@ mod tests {
 
         let v = vec![1, 2, 1, 2, 1, 2, 1, 2, 1];
         assert_eq!(vec![1, 6], nodes_between_critical_points_vec(v));
+    }
+
+    #[test]
+    fn nodes_between_critical_points_cpplike_vec_typical() {
+        let v = vec![3, 1];
+        assert_eq!(vec![-1, -1], nodes_between_critical_points_cpplike_vec(v));
+
+        let v = vec![5, 3, 1, 2, 5, 1, 2];
+        assert_eq!(vec![1, 3], nodes_between_critical_points_cpplike_vec(v));
+
+        let v = vec![1, 3, 2, 2, 3, 2, 2, 2, 7];
+        assert_eq!(vec![3, 3], nodes_between_critical_points_cpplike_vec(v));
+
+        let v = vec![2, 3, 3, 2];
+        assert_eq!(vec![-1, -1], nodes_between_critical_points_cpplike_vec(v));
+
+        let v = vec![1, 2, 1, 2, 1, 2, 1, 2, 1];
+        assert_eq!(vec![1, 6], nodes_between_critical_points_cpplike_vec(v));
     }
 }
