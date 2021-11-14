@@ -1,6 +1,7 @@
 #![allow(unused)]
 
-// ref: https://leetcode.com/problems/minimized-maximum-of-products-distributed-to-any-store/discuss/1563739/
+// ref: 
+//   https://leetcode.com/problems/minimized-maximum-of-products-distributed-to-any-store/discuss/1563739/
 
 pub fn minimized_maximum(n: i32, qtts: Vec<i32>) -> i32 {
     let mut left: i32 = 1;
