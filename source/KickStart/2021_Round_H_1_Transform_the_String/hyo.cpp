@@ -6,15 +6,12 @@ using ll = long long;
 void solve(int TestCase) {
     string s, f;
     cin >> s >> f;
-    
+
     vector<int> cost(26, INT_MAX);
-    for(auto c : f) cost[c - 'a'] = 0;
-    for(auto i = 0; i < 26; ++i) {
-        for(auto j = 0; j < 26; ++j) {
-            if(cost[j] == 0) {
-                cost[i] = min(cost[i], abs(i - j));
-                cost[i] = min(cost[i], 26 - abs(i - j));
-            }
+    for(auto c0 = 'a'; c0 <= 'z'; ++c0) {
+        for(auto c1 : f) {
+            int d = abs(c0 - c1);
+            cost[c0 - 'a'] = min(cost[c0 - 'a'], min(d, 26 - d));
         }
     }
 
@@ -22,7 +19,7 @@ void solve(int TestCase) {
     for(auto c : s)
         ret += cost[c - 'a'];
     
-    cout << ret << '\n';
+    cout << ret << endl;
 }
  
 int main(){
