@@ -27,8 +27,7 @@ public:
     
     int countPyramids(vector<vector<int>>& grid) {
         auto grid2 = grid;
-        for(auto i = 0; i < grid2.size() / 2; ++i)
-            swap(grid2[i], grid2[grid2.size() - 1 - i]);
+        reverse(grid2.begin(), grid2.end());
         
         return f(grid) + f(grid2);
     }
