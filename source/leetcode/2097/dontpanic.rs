@@ -24,16 +24,14 @@ impl Solution {
             None => pairs[0][0],
         };
 
-
         fn dfs(g: &mut HashMap<i32, VecDeque<i32>>, cur: i32, route: &mut Vec<i32>) {
             while let Some(vdq) = g.get_mut(&cur) {
                 if vdq.is_empty() {
-                   break; 
-                }
-                else {
-                if let Some(next) = vdq.pop_back() {
-                    dfs(g, next, route);
-                }
+                    break;
+                } else {
+                    if let Some(next) = vdq.pop_back() {
+                        dfs(g, next, route);
+                    }
                 }
             }
             route.push(cur);
