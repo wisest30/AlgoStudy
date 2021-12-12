@@ -41,7 +41,6 @@ impl Solution {
 
         dfs(&mut g, x, &mut route);
 
-        dbg!(&route);
         let it0 = route.iter().rev();
         let it1 = it0.clone().skip(1);
         let itzip = it0.zip(it1);
