@@ -4,9 +4,7 @@ impl Solution {
         bank.iter()
             .filter(|s| s.contains("1"))
             .map(|s| s.chars().filter(|&c| c == '1').count())
-            .collect::<Vec<_>>()
-            .iter()
-            .fold(0, |acc, &x| { 
+            .fold(0, |acc, x| { 
                 let ret = acc + x * prev;
                 prev = x;
                 ret
