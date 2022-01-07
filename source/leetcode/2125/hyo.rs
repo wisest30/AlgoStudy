@@ -3,8 +3,7 @@ impl Solution {
         let mut prev = 0;
         bank.iter()
             .filter(|s| s.contains("1"))
-            .map(|s| s.chars().filter(|&c| c == '1')
-            .count())
+            .map(|s| s.chars().filter(|&c| c == '1').count())
             .collect::<Vec<_>>()
             .iter()
             .fold(0, |acc, &x| { 
