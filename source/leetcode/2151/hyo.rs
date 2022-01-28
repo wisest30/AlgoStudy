@@ -1,7 +1,6 @@
 impl Solution {
     pub fn maximum_good(statements: Vec<Vec<i32>>) -> i32 {
         let n = statements.len();
-        let mut ret = 0i32;
         
         let check_ith_statements = |subset, i| {
             let ith_statements : &Vec<i32> = &statements[i];
@@ -18,11 +17,15 @@ impl Solution {
             .all(|i| check_ith_statements(subset, i))
         };
         
-        for subset in 0..(1 << n) {
+        (0..1<<n)
+        .map(|subset|
             if check_subset(subset) {
-                ret = std::cmp::max(ret, (subset as usize).count_ones() as i32);
+                (subset as usize).count_ones() as i32
+            } else {
+                0
             }
-        }
-        ret
+        )
+        .max()
+        .unwrap()
     }
 }
