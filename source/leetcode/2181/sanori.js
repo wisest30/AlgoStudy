@@ -1,14 +1,24 @@
 /**
- * @param {number} num
- * @return {number}
+ * @param {ListNode} head
+ * @return {ListNode}
  */
-var countEven = function (num) {
-  let res = 0;
-  for (let i = 1; i <= num; i++) {
-    const sum = i.toString().split('').map(Number).reduce((a, b) => a + b, 0);
-    if (sum % 2 === 0) {
-      res++;
-    }
+var mergeNodes = function(head) {
+  if (!head) {
+    return head;
   }
+  const res = new ListNode(0);
+  let p = head.next, q = res;
+  while (p) {
+    while(p.val !== 0) {
+      q.val += p.val;
+      p = p.next;
+    }
+    if (p.next !== null) {
+      q.next = new ListNode(0);
+      q = q.next;
+    }
+    p = p.next;
+  }
+  
   return res;
 };
