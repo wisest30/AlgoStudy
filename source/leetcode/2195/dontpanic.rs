@@ -7,17 +7,18 @@ use std::iter::FromIterator;
 
 impl Solution {
     // wrong answer on [53, 41, 90, 33, 84, 26, 50, 32, 63, 47, 66, 43, 29, 88, 71, 28, 83,], 76
-    pub fn minimal_k_sum(mut nums: Vec<i32>, k: i32) -> i64 {
+    pub fn minimal_k_sum(nums: Vec<i32>, k: i32) -> i64 {
         // see https://leetcode.com/problems/append-k-integers-with-minimal-sum/discuss/1823630/n-*-(n-%2B-1)-2
         let mut k = k as i64;
-        let mut res = {
-            k * (k + 1) / 2
+        let nums = {
+            let h: HashSet<i32> = HashSet::from_iter(nums);
+            let mut x: Vec<_> = h.into_iter().collect();
+            x.sort();
+            x
         };
 
-        // nums.sort();
-        let h: HashSet<i32> = HashSet::from_iter(dbg!(nums));
-        for n in dbg!(h) {
-            // for n in nums {
+        let mut res = { k * (k + 1) / 2 };
+        for n in nums {
             if n as i64 <= k {
                 k += 1;
                 res += k - n as i64;
