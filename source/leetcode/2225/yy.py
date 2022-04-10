@@ -1,7 +1,5 @@
 class Solution:
     def findWinners(self, matches: List[List[int]]) -> List[List[int]]:
-        dict_win={}
-        dict_lose={}
         total_nums={}
         for match in matches:
             i,j=match
