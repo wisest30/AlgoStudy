@@ -70,9 +70,6 @@ void solve(int TestCase) {
     ret = ret * inv(fact) % MOD;
 
     cout << ret << endl;
-
-    memset(dp, -1, sizeof(dp));
-    m = 3, k = 1;
 }
  
 int main(){
