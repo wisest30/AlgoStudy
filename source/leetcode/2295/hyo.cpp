@@ -1,12 +1,14 @@
 class Solution {
 public:
-    int partitionArray(vector<int>& nums, int k) {
-        sort(nums.begin(), nums.end());
+    vector<int> arrayChange(vector<int>& nums, vector<vector<int>>& operations) {
+        map<int, int> m;
+        for(auto i = 0; i < nums.size(); ++i)
+            m[nums[i]] = i;
         
-        int ret = 1, l = 0, r = 0;
-        while(r < nums.size())
-            nums[r] - nums[l] <= k ? ++r : (l = r, ++ret);
+        for(auto& o : operations)
+            if(m.count(o[0]))
+                nums[m[o[0]]] = o[1], m[o[1]] = m[o[0]];
         
-        return ret;
+        return nums;
     }
 };
