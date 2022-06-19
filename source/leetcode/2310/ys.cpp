@@ -28,6 +28,6 @@ public:
             }
         }
         
-        return cache[num] == 12345 ? -1 : cache[num];
+        return cache[num] == UNSET ? -1 : cache[num];
     }
 };
