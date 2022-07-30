@@ -72,8 +72,7 @@ impl FoodRatings {
         let cuisine = self.cuisine_map.get(&food).unwrap();
         self.heap_map
             .entry(cuisine.clone())
-            .or_insert(BinaryHeap::new())
-            .push(Food::new(food, new_rating));
+            .and_modify(|e| e.push(Food::new(food, new_rating)));
     }
 
     fn highest_rated(&mut self, cuisine: String) -> String {
