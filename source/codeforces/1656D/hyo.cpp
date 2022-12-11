@@ -15,12 +15,12 @@ void solve(int TestCase) {
         return k * (k + 1) / 2; // int64 can be overflowed.
     };
 
-    if(n >= su(p * 2))
-        cout << (p * 2) << endl;
-    else if(q > 1 && n >= su(q))
-        cout << q << endl;
-    else
+    if(q == 1) 
         cout << -1 << endl;
+    else if(n >= su(p * 2))
+        cout << (p * 2) << endl;
+    else
+        cout << q << endl;
 }
  
 int main(){
