@@ -3,11 +3,11 @@
 using namespace std;
 using ll = long long;
 
-int solve2(vector<int>& V, int type) {
+int solve2(vector<int>& V) {
     if(V.empty())
         return 0;
 
-    int n = V.size(), ret = 0;
+    int n = V.size(), ret = 0, type = 1;
     vector<int> mx(n, 0), mn(n, INT_MAX);
     mx[0] = mn[0] = V[0];
     for(auto i = 1; i < n; ++i)
@@ -30,28 +30,13 @@ void solve(int TestCase) {
     vector<int> A(n);
     for(auto& x : A) cin >> x;
 
-    if(n == 1) {
-        cout << 0 << endl;
-        return;
-    }
+    int idx_1 = find(A.begin(), A.end(), 1) - A.begin();
 
-    int a = -1, b = -1;
-    for(auto i = 0; i < n; ++i) {
-        if(A[i] == 1) a = i;
-        if(A[i] == n) b = i;
-    }
-
-    if(a > b) {
-        reverse(A.begin(), A.end());
-        a = n - 1 - a;
-        b = n - 1 - b;
-    }
-
-    vector<int> L(A.begin(), A.begin() + a);
-    vector<int> R(A.begin() + b + 1, A.end());
+    vector<int> L(A.begin(), A.begin() + idx_1);
+    vector<int> R(A.begin() + idx_1 + 1, A.end());
     reverse(R.begin(), R.end());
 
-    auto ret = solve2(L, 1) + solve2(R, 0) + 1;
+    auto ret = solve2(L) + solve2(R);
     cout << ret << endl;
 }
  
