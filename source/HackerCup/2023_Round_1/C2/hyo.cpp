@@ -40,8 +40,8 @@ void solve(int TestCase)
         --x;
 
         pressed[x] ? --press_cnt : ++press_cnt;
-        ans += press_cnt;
         pressed[x] = !pressed[x];
+        ans += press_cnt;
     }
 
     cout << ans << endl;
